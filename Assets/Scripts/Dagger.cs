@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Dagger : MonoBehaviour {
-
+    
     [SerializeField]
-    private float moveSpeed = 20f;
+    private float moveSpeed = 5f;
+    public float damage = 100f;
 
     void Start()
     {

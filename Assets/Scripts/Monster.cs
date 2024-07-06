@@ -7,7 +7,7 @@ public class Monster : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 0.3f;
     [SerializeField]
-    private float minimumLine = -2.5f;
+    private float minimumLine = -3.5f;
     [SerializeField]
     private float respawnLine = -10;
     private float monsterHp = 100f; //monster HP
@@ -19,11 +19,13 @@ public class Monster : MonoBehaviour
     void Update(){
         transform.position += Vector3.down * moveSpeed * Time.deltaTime;
 
-        if (transform.position.y < minimumLine){
-            Destroy(gameObject);
-        }
+        // if (transform.position.y < minimumLine){
+        //     Debug.Log("monster disappeard");
+        //     Destroy(gameObject);
+        // }
 
         if (transform.position.y < respawnLine){
+            Debug.Log("wtf is this....");
             Destroy(gameObject);
         }
     }
@@ -46,10 +48,18 @@ public class Monster : MonoBehaviour
             monsterHp -= dagger.damage;
 
             if (monsterHp <= 0) {
+                Debug.Log("monster got destroyed");
                 Destroy(gameObject);
             }
-
             Destroy(other.gameObject); //적과 무기가 닿을때 무기는 무조건 사라진다
+        } 
+        else if (other.gameObject.tag == "fence") {
+            Player player = FindObjectOfType<Player>();
+            if (player != null) {
+                Debug.Log("player got damaged");  
+                player.TakeDamage(100f);
+                Destroy(gameObject);
+            }
         }
     }
 }

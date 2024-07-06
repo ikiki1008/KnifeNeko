@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6105704276205572765}
   - component: {fileID: 7668004064841519475}
   - component: {fileID: 9195550228194171042}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Monster3
   m_TagString: monster
   m_Icon: {fileID: 0}
@@ -194,5 +194,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.3
-  minimumLine: -2.5
   respawnLine: -10
+  monsterHp: 100

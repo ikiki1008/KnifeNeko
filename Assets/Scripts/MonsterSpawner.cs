@@ -16,6 +16,15 @@ public class MonsterSpawner : MonoBehaviour
         StartCoroutine("MonsterRoutine");
     }
 
+    public void RestartRoutine() {
+        StartCoroutine("MonsterRoutine");
+    }
+
+    public void StopEnemyRoutine() {
+        Debug.Log("set game stop!!!!");
+        StopCoroutine("MonsterRoutine");
+    }
+
     IEnumerator MonsterRoutine() {
         yield return new WaitForSeconds(1.5f);
         int spawnCount = 0;

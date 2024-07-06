@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7533667974261805845}
   - component: {fileID: 8372990840452474504}
   - component: {fileID: 4575634837617693541}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Monster2
   m_TagString: monster
   m_Icon: {fileID: 0}
@@ -122,8 +122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.3
-  minimumLine: -2.5
   respawnLine: -10
+  monsterHp: 100
 --- !u!61 &8372990840452474504
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -9,11 +9,9 @@ public class Level : MonoBehaviour{
     private int gameLevel; // int 타입으로 변경
     [SerializeField]
     private GameObject score;
-    [SerializeField]
-    private GameObject gameLevelText;
     private List<GameObject> scoreObjects = new List<GameObject>();
     private float[] posX = {-1.94f, -1.44f, -0.94f, -0.44f, 0.054f };
-    private float posY = 4.3f;
+    // private float posY = 4.3f;
 
     // 각 레벨에 도달하기 위한 점수 임계값 배열
     private int[] levelThresholds = {
@@ -43,9 +41,13 @@ public class Level : MonoBehaviour{
         Debug.Log("Game Score: " + gameScore);
 
         // 현재 레벨에서 다음 레벨로 올라갈 점수 임계값을 확인
-        // 예를 들어 1레벨에서 300, 그다음 2레벨로 가기 위해 레벨업마다 점수 초기화 하지않고 300+400 하여 700이 모이면 레벨 2가됨.
-        if (gameLevel < levelThresholds.Length && gameScore >= levelThresholds[gameLevel - 1]) {
-            LevelUp();
+        if (gameLevel < levelThresholds.Length) {
+            if (gameScore >= levelThresholds[gameLevel - 1]) {
+                LevelUp();
+            }
+        } else {
+            Debug.LogWarning("Level thresholds array length exceeded. Check array length and conditions.");
         }
     }
+
 }

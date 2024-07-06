@@ -196,3 +196,4 @@ MonoBehaviour:
   moveSpeed: 0.3
   minimumLine: -2.5
   respawnLine: -10
+  monsterHp: 200

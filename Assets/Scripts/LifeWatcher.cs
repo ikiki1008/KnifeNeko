@@ -5,10 +5,9 @@ using TMPro; // TextMeshPro를 사용하기 위해 추가
 
 public class LifeWatcher : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject lifePrefab; // 생명력 이미지 프리팹
+    [SerializeField] private GameObject lifePrefab; // 생명력 이미지 프리팹
     private List<GameObject> lifeObjects = new List<GameObject>(); // 생성된 생명력 이미지 객체 리스트
-    private TextMeshProUGUI hpText; // 생명력을 표시할 텍스트 UI
+    [SerializeField] private TextMeshProUGUI hpText; // 생명력을 표시할 텍스트 UI
 
     // x 좌표
     private float posX = 1.9f;
@@ -39,18 +38,15 @@ public class LifeWatcher : MonoBehaviour
         GameObject textObj = new GameObject("HP Text");
         textObj.transform.SetParent(canvas.transform); // Canvas의 자식으로 설정
 
-        // TextMeshProUGUI 추가
-        hpText = textObj.AddComponent<TextMeshProUGUI>();
-        hpText.rectTransform.anchoredPosition = new Vector2(posX - textOffset, posY); 
-        hpText.alignment = TextAlignmentOptions.Right;
-        hpText.fontSize = 80; 
-        hpText.color = Color.white; 
-
         UpdateHPText(3000); // 초기 생명력 값 설정 (여기서는 3000으로 초기화)
     }
 
     public void RemoveLife(float lifeHP)
     {
+        if (lifeHP == 0) {
+            Debug.Log("player is dead !!");
+            PlayerDead();
+        }
         // 생명력 텍스트 업데이트
         UpdateHPText(lifeHP);
     }
@@ -58,5 +54,20 @@ public class LifeWatcher : MonoBehaviour
     void UpdateHPText(float hp)
     {
         hpText.text = hp.ToString(); // 텍스트 업데이트
+    }
+
+    private void PlayerDead() {
+        GameOverManager gameOverManager = FindObjectOfType<GameOverManager>();
+        MonsterSpawner monsterSpawner = FindObjectOfType<MonsterSpawner>();
+        Monster monster = FindObjectOfType<Monster>();
+        Player player = FindObjectOfType<Player>();
+
+        if(gameOverManager != null && monster != null && monsterSpawner != null && player != null) {
+            Monster.PauseMonsters();  
+            monsterSpawner.StopEnemyRoutine();
+            player.Stop(true);
+            gameOverManager.GameOverResult(false);
+        }
+        Debug.Log("failed loser screen up....");
     }
 }

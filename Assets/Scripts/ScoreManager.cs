@@ -16,8 +16,7 @@ public class ScoreManager : MonoBehaviour
     private int[] levelThresholds = {
         300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200
     };
-    [SerializeField]
-    private GameObject levelUpPanel;
+    [SerializeField] private GameObject levelUpPanel;
 
     void Awake()
     {

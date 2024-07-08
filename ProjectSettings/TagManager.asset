@@ -9,6 +9,7 @@ TagManager:
   - level
   - fence
   - life
+  - sensei
   layers:
   - Default
   - TransparentFX

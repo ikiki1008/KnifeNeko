@@ -5,84 +5,91 @@ using UnityEngine.UI;
 
 public class RandomWeapon : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject levelUpPanel;
-    [SerializeField]
-    private Button[] buttons; // 패널에 있는 3개의 버튼 배열
+    [SerializeField] private GameObject levelUpPanel;
+    [SerializeField] private Button[] buttons; // 패널에 있는 3개의 버튼 배열
 
-    public void StartPanel()
-    {
+    private List<Sprite> weaponSprites; // weapon 폴더의 스프라이트들을 저장할 리스트
+    private List<string> selectedWeaponNames; // 선택된 무기의 이름을 저장할 리스트
+
+    public void StartPanel(){
+        LoadWeaponImages();
         SetRandomWeaponImages();
     }
 
-    private void SetRandomWeaponImages()
-    {
-        GameObject[] weaponPrefabs = Resources.LoadAll<GameObject>("Prefabs");
+    private void LoadWeaponImages(){
+        weaponSprites = new List<Sprite>();
+        Sprite[] sprites = Resources.LoadAll<Sprite>("weapon");
 
-        List<GameObject> weaponList = new List<GameObject>();
-        foreach (GameObject prefab in weaponPrefabs)
-        {
-            if (prefab.tag == "weapon")
-            {
-                weaponList.Add(prefab);
-            }
+        foreach (Sprite sprite in sprites){
+            weaponSprites.Add(sprite);
         }
 
-        if (weaponList.Count < 3)
-        {
-            Debug.LogError("Not enough weapon prefabs with 'weapon' tag found.");
-            return;
+        if (weaponSprites.Count < 3) {
+            Debug.LogError("Not enough weapon images found in 'Resources/weapon'.");
         }
+    }
 
-        List<GameObject> selectedWeapons = new List<GameObject>();
-        while (selectedWeapons.Count < 3)
-        {
-            GameObject randomWeapon = weaponList[Random.Range(0, weaponList.Count)];
-            if (!selectedWeapons.Contains(randomWeapon))
-            {
+    private void SetRandomWeaponImages(){
+        selectedWeaponNames = new List<string>();
+
+        List<Sprite> selectedWeapons = new List<Sprite>();
+        while (selectedWeapons.Count < 3){
+            Sprite randomWeapon = weaponSprites[Random.Range(0, weaponSprites.Count)];
+            if (!selectedWeapons.Contains(randomWeapon)){
                 selectedWeapons.Add(randomWeapon);
+                selectedWeaponNames.Add(randomWeapon.name);
             }
         }
 
-        for (int i = 0; i < buttons.Length; i++)
-        {
+        for (int i = 0; i < buttons.Length; i++){
             Image buttonImage = buttons[i].GetComponent<Image>();
-            buttonImage.sprite = selectedWeapons[i].GetComponent<SpriteRenderer>().sprite;
-
-            int index = i; // 클로저 문제를 피하기 위해 인덱스를 로컬 변수로 저장
-            buttons[i].onClick.RemoveAllListeners();
-            buttons[i].onClick.AddListener(() => OnWeaponButtonClicked(index));
+            buttonImage.sprite = selectedWeapons[i];
         }
     }
 
-    private void OnWeaponButtonClicked(int index)
-    {
-        Debug.Log("Button " + index + " clicked.");
+    public void OnWeaponButtonClicked(int index){
+        string selectedWeaponName = selectedWeaponNames[index];
+        Debug.Log("Button " + index + " clicked. Selected weapon: " + selectedWeaponName);
+        
         levelUpPanel.SetActive(false); // 패널 비활성화
-        // ChosenWeapon();
+        ChosenWeapon(selectedWeaponName);
     }
 
-    public void ChosenWeapon()
+    public void ChosenWeapon(string weaponName)
     {
-        Debug.Log("click!!!");
+        Debug.Log("Player Chosen weapon: " + weaponName);
+
         MonsterSpawner monsterSpawner = FindObjectOfType<MonsterSpawner>();
         Monster monster = FindObjectOfType<Monster>();
         Player player = FindObjectOfType<Player>();
+        
+        switch (weaponName) {
+            case "fire":
+                break;
+            case "ice":
+                break;
+            case "ninja":
+                break;
+            case "log":
+                break;
+            case "thunder":
+                break;
+            default:
+                break;
+        
+        }
 
         levelUpPanel.SetActive(false);
 
-        if (monster != null)
-        {
+        if (monster != null){
             Monster.ResumeMonsters();
         }
 
-        if (player != null)
-        {
+        if (player != null){
             player.Stop(false);
         }
 
-        if (monsterSpawner != null)
-        {
+        if (monsterSpawner != null){
             monsterSpawner.RestartRoutine();
         }
     }

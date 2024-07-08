@@ -13,8 +13,8 @@ public class LifeWatcher : MonoBehaviour
     private float posX = 1.9f;
     // y 좌표
     private float posY = -4.47f;
-    // 텍스트와 하트 객체 사이의 간격
-    private float textOffset = 10f;
+    // // 텍스트와 하트 객체 사이의 간격
+    // private float textOffset = 10f;
 
     void Start()
     {
@@ -58,14 +58,8 @@ public class LifeWatcher : MonoBehaviour
 
     private void PlayerDead() {
         GameOverManager gameOverManager = FindObjectOfType<GameOverManager>();
-        MonsterSpawner monsterSpawner = FindObjectOfType<MonsterSpawner>();
-        Monster monster = FindObjectOfType<Monster>();
-        Player player = FindObjectOfType<Player>();
-
-        if(gameOverManager != null && monster != null && monsterSpawner != null && player != null) {
-            Monster.PauseMonsters();  
-            monsterSpawner.StopEnemyRoutine();
-            player.Stop(true);
+        
+        if (gameOverManager != null) {
             gameOverManager.GameOverResult(false);
         }
         Debug.Log("failed loser screen up....");

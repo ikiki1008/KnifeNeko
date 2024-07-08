@@ -8,26 +8,25 @@ public class Player : MonoBehaviour
     private Transform shootTransform; // 무기 발사 위치
     [SerializeField]
     private GameObject weapon; // 무기 프리팹
-    [SerializeField]
-    private float shootInterval = 0.5f; // 무기 발사 간격
+    [SerializeField] private float shootInterval = 0.5f; // 무기 발사 간격
     private float lastTimeShoot = 0f;
     public float playerHP = 3000f; //player HP
     private bool canShoot = false; // 무기 발사 가능 여부
     private LifeWatcher lifeWatcher;
-    public float radius = 10f; // 주변 검색 반경
     public string monsterTag = "monster"; // 적 태그
+    private float[] arrPosX = { -1.98f, -1.11f, 0f, 1.07f, 2.04f };
 
     void Start()
     {
-        Debug.Log("start######");
         StartCoroutine(WaitAndShoot(5.0f)); // 몬스터가 생성되고 내려오기까지 기다림..
         lifeWatcher = FindObjectOfType<LifeWatcher>();
-        Debug.Log("start................................");
+        Debug.Log("start......");
     }
 
     void Update()
     {
-        if (canShoot){
+        if (canShoot)
+        {
             Shoot();
         }
 
@@ -38,9 +37,36 @@ public class Player : MonoBehaviour
     {
         if (Time.time - lastTimeShoot > shootInterval)
         {
-            Instantiate(weapon, shootTransform.position, Quaternion.identity);
+            GameObject targetMonster = FindClosestMonster();
+
+            if (targetMonster != null)
+            {
+                Vector3 direction = (targetMonster.transform.position - shootTransform.position).normalized;
+                GameObject spawnedWeapon = Instantiate(weapon, shootTransform.position, Quaternion.identity);
+                spawnedWeapon.GetComponent<Dagger>().SetDirection(direction); // 방향 설정
+            }
+
             lastTimeShoot = Time.time;
         }
+    }
+
+    GameObject FindClosestMonster()
+    {
+        GameObject[] monsters = GameObject.FindGameObjectsWithTag(monsterTag);
+        GameObject closestMonster = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (GameObject monster in monsters)
+        {
+            float distance = Vector3.Distance(transform.position, monster.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestMonster = monster;
+            }
+        }
+
+        return closestMonster;
     }
 
     public void TakeDamage(float damage)
@@ -52,9 +78,12 @@ public class Player : MonoBehaviour
 
     public void Stop(bool stop)
     {
-        if (stop){
+        if (stop)
+        {
             canShoot = false;
-        } else {
+        }
+        else
+        {
             canShoot = true;
             Update();
         }

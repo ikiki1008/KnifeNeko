@@ -2,21 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dagger : MonoBehaviour {
-    
-    [SerializeField]
-    private float moveSpeed = 5f;
+public class Dagger : MonoBehaviour
+{
+    [SerializeField] public float moveSpeed = 5f;
     public float damage = 300f;
+    [SerializeField] public float destroyTime = 1.0f;
+    private Vector3 direction;
 
     void Start()
     {
-        // 2초 후 무기를 없앤다
-        Destroy(gameObject, 1f);
+        // 일정 시간 후 무기를 없앤다
+        Destroy(gameObject, destroyTime);
     }
 
     void Update()
     {
-        transform.position += Vector3.up * moveSpeed * Time.deltaTime;
+        transform.position += direction * moveSpeed * Time.deltaTime;
     }
 
+    public void SetDirection(Vector3 newDirection)
+    {
+        direction = newDirection;
+    }
+
+    public float DaggerDamage()
+    {
+        return damage;
+    }
+
+    public float DaggerSpeed()
+    {
+        return moveSpeed;
+    }
 }

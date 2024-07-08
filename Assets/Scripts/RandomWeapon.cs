@@ -10,7 +10,7 @@ public class RandomWeapon : MonoBehaviour
 
     private List<Sprite> weaponSprites; // weapon 폴더의 스프라이트들을 저장할 리스트
     private List<string> selectedWeaponNames; // 선택된 무기의 이름을 저장할 리스트
-    // private bool panelOpen = false;
+    public string userNewWeapon = "";
 
     public void StartPanel(){
         LoadWeaponImages();
@@ -79,8 +79,6 @@ public class RandomWeapon : MonoBehaviour
                 break;
         
         }
-
-        // levelUpPanel.SetActive(false);
 
         if (monster != null){
             Monster.ResumeMonsters();

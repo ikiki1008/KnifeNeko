@@ -7,18 +7,20 @@ public class Tree : MonoBehaviour
     [SerializeField] public float moveSpeed;
     [SerializeField] public float damage = 600f;
     [SerializeField] public float destroyTime = 3f;
+    private List<float> posX = new List<float>{-1.5f, 0.1f, 1.5f};
 
     void Start()
     {
+        Vector3 startPostion = GetRandomPosition();
+        transform.position = startPostion;
         // destroyTime 후에 오브젝트를 파괴함
         Destroy(gameObject, destroyTime);
     }
 
     void Update()
     {
-        // 특정 범위 내에서 랜덤한 위치에 나타나게 함
-        Vector3 randomPosition = GetRandomPosition();
-        transform.position = randomPosition;
+        // move to up..
+        transform.position += Vector3.up*moveSpeed*Time.deltaTime;
     }
 
 
@@ -44,9 +46,8 @@ public class Tree : MonoBehaviour
 
     private Vector3 GetRandomPosition()
     {
-        float x = Random.Range(-1.17f, 3f);
-        float y = Random.Range(-2f, 4f);
-
+        float x = posX[Random.Range(0, posX.Count)];
+        float y = transform.position.y;
         return new Vector3(x, y, transform.position.z);
     }
 

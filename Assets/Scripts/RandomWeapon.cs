@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class RandomWeapon : MonoBehaviour
 {
     [SerializeField] private GameObject levelUpPanel;
     [SerializeField] private Button[] buttons; // 패널에 있는 3개의 버튼 배열
-
+    [SerializeField] private TextMeshProUGUI[] BtnTexts; // 버튼 텍스트 배열
     private List<Sprite> weaponSprites; // weapon 폴더의 스프라이트들을 저장할 리스트
     private List<string> selectedWeaponNames; // 선택된 무기의 이름을 저장할 리스트
-    public string userNewWeapon = "";
+    private List<string> playerWeaponNames; // 플레이어가 가지고 있는 무기의 이름을 저장할 리스트
+
+    private void Awake() {
+        playerWeaponNames = new List<string>(); // 초기화
+        selectedWeaponNames = new List<string>(); // 초기화
+    }
 
     public void StartPanel(){
+        AddWeaponToSelectedList("ninja"); // 초기 무기 추가
         LoadWeaponImages();
         SetRandomWeaponImages();
     }
@@ -31,7 +38,7 @@ public class RandomWeapon : MonoBehaviour
     }
 
     private void SetRandomWeaponImages(){
-        selectedWeaponNames = new List<string>();
+        selectedWeaponNames.Clear();
 
         List<Sprite> selectedWeapons = new List<Sprite>();
         while (selectedWeapons.Count < 3){
@@ -42,9 +49,23 @@ public class RandomWeapon : MonoBehaviour
             }
         }
 
+        bool isSpeed = true; // 스피드와 데미지 텍스트를 번갈아 넣기 위한 변수
+
         for (int i = 0; i < buttons.Length; i++){
             Image buttonImage = buttons[i].GetComponent<Image>();
             buttonImage.sprite = selectedWeapons[i];
+
+            string weaponName = selectedWeapons[i].name;
+            if (!playerWeaponNames.Contains(weaponName)) {
+                BtnTexts[i].text = "Choose\nnew weapon";
+            } else {
+                if (isSpeed) {
+                    BtnTexts[i].text = "Speed +1";
+                } else {
+                    BtnTexts[i].text = "Damage +100";
+                }
+                isSpeed = !isSpeed; // 번갈아가며 텍스트를 변경
+            }
         }
     }
 
@@ -56,28 +77,27 @@ public class RandomWeapon : MonoBehaviour
         ChosenWeapon(selectedWeaponName);
     }
 
-    public void ChosenWeapon(string weaponName)
-    {
+    public void ChosenWeapon(string weaponName) {
         Debug.Log("Player Chosen weapon: " + weaponName);
+        AddWeaponToSelectedList(weaponName);
 
         MonsterSpawner monsterSpawner = FindObjectOfType<MonsterSpawner>();
         Monster monster = FindObjectOfType<Monster>();
         Player player = FindObjectOfType<Player>();
-        
-        switch (weaponName) {
-            case "fire":
-                break;
-            case "ice":
-                break;
-            case "ninja":
-                break;
-            case "log":
-                break;
-            case "thunder":
-                break;
-            default:
-                break;
-        
+
+        if (player != null){
+            switch (weaponName){
+                case "fire":
+                case "ice":
+                case "ninja":
+                case "log":
+                case "thunder":
+                    player.AddNewWeapon(weaponName);
+                    break;
+                default:
+                    Debug.LogError("Invalid weapon name: " + weaponName);
+                    return;
+            }
         }
 
         if (monster != null){
@@ -90,6 +110,20 @@ public class RandomWeapon : MonoBehaviour
 
         if (monsterSpawner != null){
             monsterSpawner.RestartRoutine();
+        }
+    }
+
+    private void AddWeaponToSelectedList(string weaponName) {
+        if (!selectedWeaponNames.Contains(weaponName)) {
+            selectedWeaponNames.Add(weaponName);
+            Debug.Log("Weapon added to selected list: " + weaponName);
+        } else {
+            Debug.Log("Weapon already in selected list: " + weaponName);
+        }
+
+        if (!playerWeaponNames.Contains(weaponName)) {
+            playerWeaponNames.Add(weaponName);
+            Debug.Log("Weapon added to player list: " + weaponName);
         }
     }
 }

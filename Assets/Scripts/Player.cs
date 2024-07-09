@@ -6,9 +6,12 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private Transform shootTransform; // 무기 발사 위치
-    [SerializeField]
-    private GameObject weapon; // 무기 프리팹
-    [SerializeField] private float shootInterval = 0.5f; // 무기 발사 간격
+    [SerializeField]private GameObject weapon; // 무기 프리팹
+    [SerializeField]private GameObject fireWeapon; // 무기 프리팹
+    [SerializeField]private GameObject iceWeapon; // 무기 프리팹
+    [SerializeField]private GameObject treeWeapon; // 무기 프리팹
+    [SerializeField]private GameObject thunderWeapon; // 무기 프리팹
+    [SerializeField] private float shootInterval = 3.0f; // 무기 발사 간격
     private float lastTimeShoot = 0f;
     public float playerHP = 3000f; //player HP
     private bool canShoot = false; // 무기 발사 가능 여부
@@ -94,6 +97,18 @@ public class Player : MonoBehaviour
         if (restart)
         {
             canShoot = true;
+        }
+    }
+
+    public void AddNewWeapon(string newWeapon) {
+        if (newWeapon == "fire") {
+
+        } else if (newWeapon == "ice") {
+
+        } else if (newWeapon == "thunder") {
+            
+        } else {
+
         }
     }
 

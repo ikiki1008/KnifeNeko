@@ -6,7 +6,7 @@ public class Tree : MonoBehaviour
 {
     [SerializeField] public float moveSpeed;
     [SerializeField] public float damage = 600f;
-    [SerializeField] public float destroyTime = 3f;
+    [SerializeField] public float destroyTime = 2.0f;
     private List<float> posX = new List<float>{-1.5f, 0.1f, 1.5f};
 
     void Start()
@@ -21,6 +21,16 @@ public class Tree : MonoBehaviour
     {
         // move to up..
         transform.position += Vector3.up*moveSpeed*Time.deltaTime;
+    }
+
+    public float DaggerDamage()
+    {
+        return damage;
+    }
+
+    public float DaggerSpeed()
+    {
+        return moveSpeed;
     }
 
 

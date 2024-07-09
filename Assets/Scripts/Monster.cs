@@ -5,7 +5,7 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     private static bool monstersPaused = false;
-    [SerializeField]private float moveSpeed = 0.3f;
+    [SerializeField]private float moveSpeed = 0.6f;
     [SerializeField]private float respawnLine = -10;
     [SerializeField]private float monsterHp = 100f; //monster HP
     private static List<Monster> allMonsters = new List<Monster>();
@@ -48,7 +48,7 @@ public class Monster : MonoBehaviour
     private IEnumerator ResumeAfterDelay()
     {
         yield return new WaitForSeconds(1f); // 1초 뒤에 몬스터 이동 재개
-        moveSpeed = 0.3f; // 원래의 이동 속도로 설정
+        moveSpeed = 0.6f; // 원래의 이동 속도로 설정
     }
 
     public void setMoveSpeed(float speed){
@@ -62,7 +62,7 @@ public class Monster : MonoBehaviour
             Ice iceWeapon = other.gameObject.GetComponent<Ice>();
             Fire fireWeapon = other.gameObject.GetComponent<Fire>();
             Thunder thunder = other.gameObject.GetComponent<Thunder>();
-            Tree three = other.gameObject.GetComponent<Tree>();
+            Tree tree = other.gameObject.GetComponent<Tree>();
 
             float damage = 0f;
             
@@ -77,6 +77,9 @@ public class Monster : MonoBehaviour
             }
             else if (thunder != null){
                 damage = thunder.Damage(); 
+            }
+            else if (tree != null){
+                damage = tree.Damage(); 
             }
 
             monsterHp -= damage;

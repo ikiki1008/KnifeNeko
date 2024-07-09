@@ -6,7 +6,7 @@ public class Tree : MonoBehaviour
 {
     [SerializeField] public float moveSpeed = 3f;
     [SerializeField] public float damage = 600f;
-    [SerializeField] public float destroyTime = 2.0f;
+    [SerializeField] public float destroyTime = 4.0f;
     private List<float> posX = new List<float> { -1.5f, 0.1f, 1.5f };
 
     void Start()

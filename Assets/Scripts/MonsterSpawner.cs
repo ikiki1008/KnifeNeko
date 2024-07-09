@@ -9,7 +9,7 @@ public class MonsterSpawner : MonoBehaviour
     private float[] arrPosX = {-1.98f, -1.11f, 0f, 1.07f, 2.04f};
 
     void Start(){
-       StartEnemyRoutine();
+       StartEnemyRoutine(); 
     }
 
     void StartEnemyRoutine() {
@@ -30,14 +30,14 @@ public class MonsterSpawner : MonoBehaviour
         int spawnCount = 0;
         int monsterIndex = 0;
         int baseMonsterCount = 5; //초기 몬스터 수
-        float moveSpeed = 0.3f;
+        float moveSpeed = 0.6f;
 
        while (true) {
             int currentMonsterCount = Mathf.RoundToInt(baseMonsterCount * Mathf.Pow(1.5f, spawnCount / 3.0f)); // 현재 레벨의 몬스터 수 계산
             float[] selectedPositions = SelectRandomPositions(currentMonsterCount);
 
             foreach (float posX in selectedPositions) {
-                spawnMonster(posX, monsterIndex, moveSpeed);
+                SpawnMonster(posX, monsterIndex, moveSpeed);
             }
 
             spawnCount += 1;
@@ -49,21 +49,24 @@ public class MonsterSpawner : MonoBehaviour
         }    
     }
 
-    void spawnMonster(float posX, int index, float speed) {
+    void SpawnMonster(float posX, int index, float speed) {
         Vector3 spawnPos = new Vector3(posX, transform.position.y, transform.position.z);
 
-        if(Random.Range(0,2) == 0){ //monster 레벨 올리기, 100에서 50의 확률로 한단계 높은 레벨의 몬스터소환
+            // 40%의 확률로 한 단계 높은 레벨의 몬스터를 생성
+        if (Random.Range(0, 100) < 40) {
             index += 1;
         }
 
+        // 몬스터 인덱스가 배열 길이를 초과하지 않도록 조정
         if (index >= monsters.Length) {
-            index = monsters.Length - 1; //index 가 아무리 크더라도 최대 몬스터 index값에서 하나를 빼서 무한반복 되도록 한다
+            index = monsters.Length - 1;
         }
 
         GameObject monsterOb = Instantiate(monsters[index], spawnPos, Quaternion.identity);
         Monster monster = monsterOb.GetComponent<Monster>();
-        monster.setMoveSpeed(speed); //레벨이 오를수록 스피드가 빨라진다
+        monster.setMoveSpeed(speed);
     }
+
 
     float[] SelectRandomPositions(int count) {
         List<float> positions = new List<float>(arrPosX);

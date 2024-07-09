@@ -1,26 +1,36 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
 public class SpeechManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    [SerializeField] private TextMeshProUGUI bubble;
-    [SerializeField] private Image bubbleImage;
+    [SerializeField] private TextMeshProUGUI PlayerText;
+    [SerializeField] private TextMeshProUGUI CarText;
+    [SerializeField] private Image PlayerBubble;
+    [SerializeField] private Image CarBubble;
+
     void Start()
     {
-        StartCoroutine(Speech(0.5f));
+        StartCoroutine(SpeechRoutine());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator SpeechRoutine()
     {
-        
-    }
+        yield return new WaitForSeconds(2.0f); // 2초 대기 후 실행
 
-    private IEnumerator Speech(float waitTime) {
-        yield return new WaitForSeconds(waitTime);
+        // 이미지를 활성화하고 텍스트 설정
+        // 이미지를 반대 방향으로 회전
+        CarBubble.gameObject.SetActive(true);
+        CarText.text = "Weru done, Nyan";
+        yield return new WaitForSeconds(3.0f); // 3초 대기 후 실행
+        CarBubble.gameObject.SetActive(false);
+        CarText.text = "";
+
+        PlayerBubble.gameObject.SetActive(true);
+        PlayerText.text = "Wow!";
+        yield return new WaitForSeconds(3.0f); // 3초 대기 후 실행
+        PlayerBubble.gameObject.SetActive(false);
+        PlayerText.text = "";
     }
 }

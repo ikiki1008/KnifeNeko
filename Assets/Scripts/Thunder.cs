@@ -6,7 +6,7 @@ public class Thunder : MonoBehaviour
 {
     [SerializeField] public float moveSpeed = 3f;
     [SerializeField] public float damage = 600f;
-    [SerializeField] public float destroyTime = 1.0f;
+    [SerializeField] public float destroyTime = 3.0f;
     private Vector3 direction;
 
     void Start()

@@ -60,13 +60,20 @@ public class RandomWeapon : MonoBehaviour
             buttonImage.sprite = selectedWeapons[i];
 
             string weaponName = selectedWeapons[i].name;
-            
-            // 해당 무기가 플레이어의 무기 목록에 있는지 확인
             bool hasWeapon = playerWeaponNames.Contains(weaponName);
 
-            // 텍스트 설정
-            if (!hasWeapon) {
-                BtnTexts[i].text = "Choose\nnew weapon";
+            //랜덤 이미지로 스타트 무기가 있다면 무조건 스피드 혹은 데미지 업 시키기
+            if (!hasWeapon || weaponName == "ninja") {
+                if (weaponName == "ninja") { //
+                    if (isSpeed) {
+                        BtnTexts[i].text = "Speed + 1";
+                    } else {
+                        BtnTexts[i].text = "Damage + 100";
+                    }
+                    isSpeed = !isSpeed; // 번갈아가며 텍스트를 변경
+                } else {
+                    BtnTexts[i].text = "Choose\nnew weapon";
+                }
             } else {
                 if (isSpeed) {
                     BtnTexts[i].text = "Speed + 1";

@@ -6,24 +6,26 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance = null;
-
-    [SerializeField]
-    private TextMeshProUGUI scoreText;
+    [SerializeField]private TextMeshProUGUI scoreText;
+    [SerializeField] private GameObject levelUpPanel;
+    [SerializeField] private GameObject weaponList;
 
     private int gameScore;
     private int gameLevel; // int 타입으로 변경
     private int currentExperience; // 현재 유저가 쌓은 경험치
     private int[] levelThresholds = {
-        300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200
+        300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200,
+        1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000,
+        2100, 2200 // 20 레벨까지 추가
     };
-    [SerializeField] private GameObject levelUpPanel;
+    private bool isPanelOpen = false;
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-        }
+        } 
     }
 
     void Start()
@@ -41,15 +43,19 @@ public class ScoreManager : MonoBehaviour
 
         Debug.Log("Game Score: " + gameScore);
 
-        if (gameLevel <= levelThresholds.Length)
-        {
-            if (currentExperience >= levelThresholds[gameLevel - 1])
-            {
-                LevelUp();
+        if (gameLevel == 20 && currentExperience == 2200) {
+            GameOverManager gameOver = FindObjectOfType<GameOverManager>();
+            Debug.Log("이겼다!");
+            if (gameOver != null) {
+                gameOver.GameOverResult(true);
             }
         }
-        else
-        {
+
+        if (gameLevel < levelThresholds.Length){
+            if (currentExperience >= levelThresholds[gameLevel - 1]){
+                LevelUp();
+            }
+        }else{
             Debug.LogWarning("Level thresholds array length exceeded. Check array length and conditions.");
         }
 
@@ -59,7 +65,7 @@ public class ScoreManager : MonoBehaviour
     private void UpdateScoreText()
     {
         int requiredExperience = 0;
-        if (gameLevel < levelThresholds.Length)
+        if (gameLevel <= levelThresholds.Length)
         {
             requiredExperience = levelThresholds[gameLevel - 1];
         }
@@ -95,6 +101,7 @@ public class ScoreManager : MonoBehaviour
     private void ShowLevelUpPanel() {
         RandomWeapon randomWeapon = FindObjectOfType<RandomWeapon>();
         levelUpPanel.SetActive(true); //패널 활성화
+        isPanelOpen = true;
         randomWeapon.StartPanel();
     }
 }

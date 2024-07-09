@@ -45,14 +45,14 @@ public class MonsterSpawner : MonoBehaviour
                 monsterIndex += 1;
             }
 
-            yield return new WaitForSeconds(7f);
+            yield return new WaitForSeconds(2f);
         }    
     }
 
     void spawnMonster(float posX, int index, float speed) {
         Vector3 spawnPos = new Vector3(posX, transform.position.y, transform.position.z);
 
-        if(Random.Range(0,5) == 0){ //monster 레벨 올리기, 100에서 10의 확률로 한단계 높은 레벨의 몬스터소환
+        if(Random.Range(0,2) == 0){ //monster 레벨 올리기, 100에서 50의 확률로 한단계 높은 레벨의 몬스터소환
             index += 1;
         }
 
@@ -65,7 +65,7 @@ public class MonsterSpawner : MonoBehaviour
         monster.setMoveSpeed(speed); //레벨이 오를수록 스피드가 빨라진다
     }
 
-        float[] SelectRandomPositions(int count) {
+    float[] SelectRandomPositions(int count) {
         List<float> positions = new List<float>(arrPosX);
         float[] selectedPositions = new float[count];
 
@@ -81,6 +81,4 @@ public class MonsterSpawner : MonoBehaviour
 
         return selectedPositions;
     }
-
 }
- 

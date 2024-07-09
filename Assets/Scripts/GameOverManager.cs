@@ -20,19 +20,15 @@ public class GameOverManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Game Over Manager is alive...");
-        // playAgainBtn.onClick.AddListener(PlayAgain);
-        // exitBtn.onClick.AddListener(Exit);
         gameOverPanel.SetActive(false); // 패널을 비활성화된 상태로 시작
     }
 
     public void GameOverResult(bool win)
     {
-        GameObject instance;
         MonsterSpawner monsterSpawner = FindObjectOfType<MonsterSpawner>();
         Monster monster = FindObjectOfType<Monster>();
         Player player = FindObjectOfType<Player>();
-
+    
         if(monster != null && monsterSpawner != null && player != null) {
             Monster.PauseMonsters();  
             monsterSpawner.StopEnemyRoutine();
@@ -55,10 +51,6 @@ public class GameOverManager : MonoBehaviour
             }
             // instance = Instantiate(losePrefab, prefabParent); // 패배 프리팹 생성
         }
-
-        // 프리팹의 위치와 스케일 설정
-        // instance.transform.localPosition = new Vector3(0.71f, -0.31f, 0f);
-        // instance.transform.localScale = new Vector3(2f, 2f, 2f);
 
         gameOverPanel.SetActive(true);
         WeaponList.SetActive(false);

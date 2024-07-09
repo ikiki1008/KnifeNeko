@@ -17,6 +17,7 @@ public class GameOverManager : MonoBehaviour
     // [SerializeField] private GameObject losePrefab; // 패배 프리팹
     // [SerializeField] private Transform prefabParent; // 프리팹을 배치할 부모 오브젝트
     [SerializeField] private GameObject WeaponList; //무기 리스트 오브젝트
+    private TextMeshProUGUI[] finalLevels;
 
     private void Start()
     {
@@ -28,15 +29,28 @@ public class GameOverManager : MonoBehaviour
         MonsterSpawner monsterSpawner = FindObjectOfType<MonsterSpawner>();
         Monster monster = FindObjectOfType<Monster>();
         Player player = FindObjectOfType<Player>();
-    
-        if(monster != null && monsterSpawner != null && player != null) {
-            Monster.PauseMonsters();  
-            monsterSpawner.StopEnemyRoutine();
-            player.Stop(true);
-        }
+        EmptyWeaponList emptyWeaponList = FindObjectOfType<EmptyWeaponList>();
 
         Sprite winImage = Resources.Load<Sprite>("winOrlose/" + "Win");
         Sprite loseImage = Resources.Load<Sprite>("winOrlose/" + "Lose");
+
+        if(monster != null && monsterSpawner != null && player != null && emptyWeaponList != null) {
+            Monster.PauseMonsters();  
+            monsterSpawner.StopEnemyRoutine();
+            player.Stop(true);  
+            finalLevels = emptyWeaponList.ShowWeaponLevels();
+        }
+
+        //게임 오버 후 각 무기 최종 레벨 구현
+        if (finalLevels.Length >= 5) { 
+            scoreResultText.SetText(
+                "Dagger Level : " + finalLevels[0].text + "\n" +
+                "Fire Level : " + finalLevels[1].text + "\n" +
+                "Ice Level : " + finalLevels[2].text + "\n" +
+                "Tree Level : " + finalLevels[3].text + "\n" +
+                "Thunder Level : " + finalLevels[4].text
+            );
+        }
 
         if (win){
             gameOverText.SetText("FINISHED \nFIRST STAGE !!");

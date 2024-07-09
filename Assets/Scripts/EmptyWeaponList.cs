@@ -7,7 +7,11 @@ using TMPro;
 public class EmptyWeaponList : MonoBehaviour
 {
     [SerializeField] private Image[] timerImages;
-    [SerializeField] private TextMeshProUGUI[] timerTexts;
+    [SerializeField] public TextMeshProUGUI[] timerTexts;
+
+    public TextMeshProUGUI[] ShowWeaponLevels() {
+        return timerTexts;
+    }
 
     public void WeaponLevelUp(string weapon)
     {

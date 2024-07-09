@@ -11,12 +11,16 @@ public class SpeechManager : MonoBehaviour
     [SerializeField] private Image bubbleImage;
     void Start()
     {
-        
+        StartCoroutine(Speech(0.5f));
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private IEnumerator Speech(float waitTime) {
+        yield return new WaitForSeconds(waitTime);
     }
 }

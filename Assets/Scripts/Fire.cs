@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Fire : MonoBehaviour
 {
-    [SerializeField] public float moveSpeed;
+    [SerializeField] public float moveSpeed = 5f;
     [SerializeField] public float damage = 300f;
     [SerializeField] public float destroyTime = 1.0f;
     private Vector3 direction;
 
     void Start()
     {
-        moveSpeed = 5f;
-        damage = 300f;
         // 2초 후 무기를 없앤다
         Destroy(gameObject, destroyTime);
     }
@@ -21,8 +19,8 @@ public class Fire : MonoBehaviour
     void Update()
     {
         transform.position += direction * moveSpeed * Time.deltaTime;
-    }
-
+    } 
+    
     public void SetDirection(Vector3 newDirection)
     {
         direction = newDirection;

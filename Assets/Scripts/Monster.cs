@@ -47,7 +47,7 @@ public class Monster : MonoBehaviour
 
     private IEnumerator ResumeAfterDelay()
     {
-        yield return new WaitForSeconds(3f); // 1초 뒤에 몬스터 이동 재개
+        yield return new WaitForSeconds(1f); // 1초 뒤에 몬스터 이동 재개
         moveSpeed = 0.3f; // 원래의 이동 속도로 설정
     }
 
@@ -56,20 +56,34 @@ public class Monster : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other){
-        if (other.gameObject.CompareTag("weapon"))
-        {
-            Dagger playerWeapon = other.gameObject.GetComponent<Dagger>();
+        if (other.gameObject.CompareTag("weapon")){
 
-            if (playerWeapon != null)
-            {
-                float damage = playerWeapon.DaggerDamage(); // 플레이어 무기에서 데미지 가져오기
-                monsterHp -= damage;
-                if (monsterHp <= 0)
-                {
-                    Destroy(gameObject);
-                    ScoreManager.instance.IncreaseScore(100);
-                    Debug.Log("Monster defeated");
-                }
+            Dagger playerWeapon = other.gameObject.GetComponent<Dagger>();
+            Ice iceWeapon = other.gameObject.GetComponent<Ice>();
+            Fire fireWeapon = other.gameObject.GetComponent<Fire>();
+            Thunder thunder = other.gameObject.GetComponent<Thunder>();
+            Tree three = other.gameObject.GetComponent<Tree>();
+
+            float damage = 0f;
+            
+            if (playerWeapon != null){
+                damage = playerWeapon.DaggerDamage(); // 플레이어 무기에서 데미지 가져오기
+            }
+            else if (fireWeapon != null){
+                damage = fireWeapon.Damage(); 
+            }
+            else if (iceWeapon != null){
+                damage = iceWeapon.Damage(); 
+            }
+            else if (thunder != null){
+                damage = thunder.Damage(); 
+            }
+
+            monsterHp -= damage;
+            if (monsterHp <= 0) {
+                Destroy(gameObject);
+                ScoreManager.instance.IncreaseScore(100);
+                Debug.Log("Monster defeated");
             }
 
             Destroy(other.gameObject); // 무기는 무조건 사라짐

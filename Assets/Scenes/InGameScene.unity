@@ -2197,7 +2197,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &847392055
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5256,10 +5256,13 @@ MonoBehaviour:
   shootTransform: {fileID: 1387283687}
   weapon: {fileID: 6985708514587129483, guid: bc96524b09dfdf74aaf07be7c83adeb8, type: 3}
   fireWeapon: {fileID: 6680052917970260783, guid: 3f3d625c4c7aff34a89568106a79e546, type: 3}
-  iceWeapon: {fileID: 0}
+  iceWeapon: {fileID: 181862959520396763, guid: b6085416ffe369c46ae501c9c829eb07, type: 3}
   treeWeapon: {fileID: 3820123693331052053, guid: f2633909870552d44b7d4440410edd64, type: 3}
   thunderWeapon: {fileID: 3795309991781443773, guid: 7da3fe9e5471b814d892991f0d07082b, type: 3}
   shootInterval: 2
+  fireInterval: 2
+  iceInterval: 2
+  thunderInterval: 4
   playerHP: 3000
   monsterTag: monster
 --- !u!50 &1932508863

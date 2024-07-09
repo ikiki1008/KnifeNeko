@@ -18,7 +18,7 @@ public class ScoreManager : MonoBehaviour
         1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000,
         2100, 2200 // 20 레벨까지 추가
     };
-    private bool isPanelOpen = false;
+    // private bool isPanelOpen = false;
 
     void Awake()
     {
@@ -102,7 +102,7 @@ public class ScoreManager : MonoBehaviour
         RandomWeapon randomWeapon = FindObjectOfType<RandomWeapon>();
         weaponList.SetActive(false);
         levelUpPanel.SetActive(true); //패널 활성화
-        isPanelOpen = true;
+        // isPanelOpen = true;
         randomWeapon.StartPanel();
     }
 }

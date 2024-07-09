@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Thunder : MonoBehaviour
 {
-    [SerializeField] public float moveSpeed;
+    [SerializeField] public float moveSpeed = 3f;
     [SerializeField] public float damage = 600f;
     [SerializeField] public float destroyTime = 1.0f;
     private Vector3 direction;
@@ -18,9 +18,6 @@ public class Thunder : MonoBehaviour
     void Update()
     {
         transform.position += direction * moveSpeed * Time.deltaTime;
-        // 특정 범위 내에서 랜덤한 위치에 나타나게 함
-        // Vector3 randomPosition = GetRandomPosition();
-        // transform.position = randomPosition;
     }
 
     public void SetDirection(Vector3 newDirection)

@@ -5,8 +5,8 @@ using UnityEngine;
 public class Dagger : MonoBehaviour
 {
     [SerializeField] public float moveSpeed = 5f;
-    public float damage = 300f;
-    [SerializeField] public float destroyTime = 1.0f;
+    public float damage = 100f;
+    [SerializeField] public float destroyTime = 3.0f;
     private Vector3 direction;
 
     void Start()

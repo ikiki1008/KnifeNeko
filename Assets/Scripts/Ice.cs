@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ice : MonoBehaviour
 {
     [SerializeField] public float moveSpeed = 5f;
-    [SerializeField] public float damage = 300f;
+    [SerializeField] public float damage = 100f;
     [SerializeField] public float destroyTime = 1.0f;
     private Vector3 direction;
 
@@ -17,6 +17,7 @@ public class Ice : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("얼음 날라가신다.....");
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
 

@@ -4,61 +4,63 @@ using UnityEngine;
 
 public class Tree : MonoBehaviour
 {
-    [SerializeField] public float moveSpeed;
+    [SerializeField] public float moveSpeed = 3f;
     [SerializeField] public float damage = 600f;
     [SerializeField] public float destroyTime = 2.0f;
-    private List<float> posX = new List<float>{-1.5f, 0.1f, 1.5f};
+    private List<float> posX = new List<float> { -1.5f, 0.1f, 1.5f };
 
     void Start()
     {
-        Vector3 startPostion = GetRandomPosition();
-        transform.position = startPostion;
-        // destroyTime 후에 오브젝트를 파괴함
-        Destroy(gameObject, destroyTime);
+        Vector3 startPosition = SetTreePosition();
+        transform.position = startPosition;
+        Destroy(gameObject, destroyTime); // destroyTime 후에 오브젝트를 파괴함
     }
 
     void Update()
     {
-        // move to up..
-        transform.position += Vector3.up*moveSpeed*Time.deltaTime;
+        transform.position += Vector3.up * moveSpeed * Time.deltaTime; // 위로 이동
     }
 
-    public float DaggerDamage()
+    public float Damage()
     {
         return damage;
     }
 
-    public float DaggerSpeed()
+    public float Speed()
     {
         return moveSpeed;
     }
 
-
-    public void UpgradeDamage(float newDamage) {
-        
-        if (damage >= 1000) {
+    public void UpgradeDamage(float newDamage)
+    {
+        if (damage >= 1000)
+        {
             Debug.Log("나무 속성 무기 데미지 최대치로 왔음");
-        } else {
+        }
+        else
+        {
             damage += newDamage;
             Debug.Log(damage);
         }
     }
 
-    public void DecreaseTime (float time) {
-
-        if (destroyTime == 1) {
-            Debug.Log("나무 속성 무기 시간 최대치로 왔음");
-        } else {
-             destroyTime -= time; 
-        Debug.Log(destroyTime);
+    public void DecreaseTime(float time)
+    {
+        if (destroyTime <= 1)
+        {
+            Debug.Log("나무 속성 무기 시간 최소치로 왔음");
         }
-    }   
+        else
+        {
+            destroyTime -= time;
+            Debug.Log(destroyTime);
+        }
+    }
 
-    private Vector3 GetRandomPosition()
+    public Vector3 SetTreePosition()
     {
         float x = posX[Random.Range(0, posX.Count)];
         float y = transform.position.y;
         return new Vector3(x, y, transform.position.z);
     }
-
 }

@@ -100,6 +100,7 @@ public class ScoreManager : MonoBehaviour
 
     private void ShowLevelUpPanel() {
         RandomWeapon randomWeapon = FindObjectOfType<RandomWeapon>();
+        weaponList.SetActive(false);
         levelUpPanel.SetActive(true); //패널 활성화
         isPanelOpen = true;
         randomWeapon.StartPanel();

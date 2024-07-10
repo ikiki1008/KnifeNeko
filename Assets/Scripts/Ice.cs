@@ -17,7 +17,6 @@ public class Ice : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("얼음 날라가신다.....");
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
 
@@ -36,23 +35,29 @@ public class Ice : MonoBehaviour
         return moveSpeed;
     }
 
-    public void UpgradeDamage(float newDamage) {
-        
-        if (damage >= 800) {
-            Debug.Log("얼음 속성 무기 데미지 최대치로 왔음");
-        } else {
-            damage += newDamage;
-            Debug.Log(damage);
+    public void UpgradeDamage(float newDamage)
+    {
+        if (damage >= 800)
+        {
+            Debug.Log("얼음 무기 데미지 최대치로 도달");
+        }
+        else
+        {
+            damage = Mathf.Min(damage + newDamage, 800);
+            Debug.Log("얼음 무기 데미지 업그레이드! 현재 데미지: " + damage);
         }
     }
 
-    public void DecreaseTime (float time) {
-
-        if (destroyTime == 1) {
-            Debug.Log("속성 무기 시간 최대치로 왔음");
-        } else {
-             destroyTime -= time; 
-        Debug.Log(destroyTime);
+    public void UpgradeSpeed(float speedIncrement)
+    {
+        if (moveSpeed >= 10)
+        {
+            Debug.Log("얼음 무기 스피드 최대치로 도달");
+        }
+        else
+        {
+            moveSpeed = Mathf.Min(moveSpeed + speedIncrement, 10);
+            Debug.Log("얼름 무기 스피드 업그레이드! 현재 스피드: " + moveSpeed);
         }
     }
 }

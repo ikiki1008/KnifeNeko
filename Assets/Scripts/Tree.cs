@@ -42,19 +42,18 @@ public class Tree : MonoBehaviour
             damage += newDamage;
             Debug.Log(damage);
         }
+        Update();
     }
 
-    public void DecreaseTime(float time)
-    {
-        if (destroyTime <= 1)
-        {
-            Debug.Log("나무 속성 무기 시간 최소치로 왔음");
+    public void UpgradeSpeed (float speed) {
+
+        if (moveSpeed == 5) {
+            Debug.Log("나무 무기 스피드 최대치로 왔음");
+        } else {
+            moveSpeed += speed; 
+            Debug.Log(moveSpeed);
         }
-        else
-        {
-            destroyTime -= time;
-            Debug.Log(destroyTime);
-        }
+        Update();
     }
 
     public Vector3 SetTreePosition()

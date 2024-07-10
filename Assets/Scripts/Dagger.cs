@@ -6,7 +6,7 @@ public class Dagger : MonoBehaviour
 {
     [SerializeField] public float moveSpeed = 5f;
     public float damage = 100f;
-    [SerializeField] public float destroyTime = 3.0f;
+    [SerializeField] public float destroyTime = 1.0f;
     private Vector3 direction;
 
     void Start()
@@ -33,5 +33,31 @@ public class Dagger : MonoBehaviour
     public float DaggerSpeed()
     {
         return moveSpeed;
+    }
+
+    public void UpgradeDamage(float newDamage)
+    {
+        if (damage >= 800)
+        {
+            Debug.Log("속성 무기 데미지 최대치로 도달");
+        }
+        else
+        {
+            damage = Mathf.Min(damage + newDamage, 800);
+            Debug.Log("닌자 무기 데미지 업그레이드! 현재 데미지: " + damage);
+        }
+    }
+
+    public void UpgradeSpeed(float speedIncrement)
+    {
+        if (moveSpeed >= 10f)
+        {
+            Debug.Log("속성 무기 스피드 최대치로 도달");
+        }
+        else
+        {
+            moveSpeed = Mathf.Min(moveSpeed + speedIncrement, 10);
+            Debug.Log("닌자 무기 스피드 업그레이드! 현재 스피드: " + moveSpeed);
+        }
     }
 }

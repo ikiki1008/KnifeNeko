@@ -9,7 +9,7 @@ public class MonsterSpawner : MonoBehaviour
     private float[] arrPosX = {-1.98f, -1.11f, 0f, 1.07f, 2.04f};
 
     void Start(){
-       StartEnemyRoutine(); 
+        StartEnemyRoutine(); 
     }
 
     void StartEnemyRoutine() {
@@ -29,15 +29,16 @@ public class MonsterSpawner : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         int spawnCount = 0;
         int monsterIndex = 0;
-        int baseMonsterCount = 5; //초기 몬스터 수
+        int baseMonsterCount = 5; // 초기 몬스터 수
         float moveSpeed = 0.6f;
 
-       while (true) {
+        while (true) {
             int currentMonsterCount = Mathf.RoundToInt(baseMonsterCount * Mathf.Pow(1.5f, spawnCount / 3.0f)); // 현재 레벨의 몬스터 수 계산
             float[] selectedPositions = SelectRandomPositions(currentMonsterCount);
+            int strongMonsterProbability = Mathf.Clamp(30 + spawnCount * 10, 30, 100); // 기본 확률 30%에 레벨당 10%씩 증가, 최대 100%
 
             foreach (float posX in selectedPositions) {
-                SpawnMonster(posX, monsterIndex, moveSpeed);
+                SpawnMonster(posX, monsterIndex, moveSpeed, strongMonsterProbability);
             }
 
             spawnCount += 1;
@@ -49,11 +50,11 @@ public class MonsterSpawner : MonoBehaviour
         }    
     }
 
-    void SpawnMonster(float posX, int index, float speed) {
+    void SpawnMonster(float posX, int index, float speed, int strongMonsterProbability) {
         Vector3 spawnPos = new Vector3(posX, transform.position.y, transform.position.z);
 
-            // 40%의 확률로 한 단계 높은 레벨의 몬스터를 생성
-        if (Random.Range(0, 100) < 40) {
+        // 레벨 단계에 따라 확률이 증가하여 한 단계 높은 레벨의 몬스터를 생성
+        if (Random.Range(0, 100) < strongMonsterProbability) {
             index += 1;
         }
 
@@ -66,7 +67,6 @@ public class MonsterSpawner : MonoBehaviour
         Monster monster = monsterOb.GetComponent<Monster>();
         monster.setMoveSpeed(speed);
     }
-
 
     float[] SelectRandomPositions(int count) {
         List<float> positions = new List<float>(arrPosX);

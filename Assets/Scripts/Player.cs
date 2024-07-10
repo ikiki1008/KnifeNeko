@@ -9,13 +9,14 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject weapon; // 무기 프리팹
     [SerializeField] private GameObject fireWeapon; 
     [SerializeField] private GameObject iceWeapon; 
-    [SerializeField] private GameObject treeWeapon; 
+    [SerializeField] private GameObject treeWeapon;
     [SerializeField] private GameObject thunderWeapon; 
     [SerializeField] private float shootInterval = 2.0f; // 무기 발사 간격
     [SerializeField] private float fireInterval = 2.0f; 
     [SerializeField] private float iceInterval = 2.0f; 
     [SerializeField] private float thunderInterval = 5.0f;
     [SerializeField] private float treeInterval = 5.0f;
+    [SerializeField] private AudioSource backgroundMusic; // 배경 음악 AudioSource
     private float lastTimeShoot = 0f;
     private float lastTimeFireShoot = 0f;
     private float lastTimeIceShoot = 0f;
@@ -33,7 +34,11 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(WaitAndShoot(5.0f)); // 몬스터가 생성되고 내려오기까지 기다림..
+        if (backgroundMusic != null && PlayerPrefs.GetInt("MusicMuted", 0) == 0){
+            backgroundMusic.Play();
+        }
+
+        StartCoroutine(WaitAndShoot(3.0f)); // 몬스터가 생성되고 내려오기까지 기다림..
         lifeWatcher = FindObjectOfType<LifeWatcher>();
         Debug.Log("start......");
     }
@@ -47,7 +52,6 @@ public class Player : MonoBehaviour
             if (hasIceWeapon) ShootIce();
             if (hasThunderWeapon) ShootThunder();
             if (hasTreeWeapon) ShootTree();
-            
         }
 
         CheckGameOver();

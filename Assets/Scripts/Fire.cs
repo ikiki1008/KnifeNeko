@@ -46,13 +46,13 @@ public class Fire : MonoBehaviour
         }
     }
 
-    public void DecreaseTime (float time) {
+    public void UpgradeSpeed (float speed) {
 
-        if (destroyTime == 1) {
-            Debug.Log("불 속성 무기 시간 최대치로 왔음");
+        if (moveSpeed == 10) {
+            Debug.Log("불 무기 스피드 최대치로 왔음");
         } else {
-             destroyTime -= time; 
-        Debug.Log(destroyTime);
+            moveSpeed += speed; 
+            Debug.Log(moveSpeed);
         }
     }
 }

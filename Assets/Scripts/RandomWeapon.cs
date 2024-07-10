@@ -10,6 +10,11 @@ public class RandomWeapon : MonoBehaviour
     [SerializeField] private Button[] buttons; // 패널에 있는 3개의 버튼 배열
     [SerializeField] private TextMeshProUGUI[] BtnTexts; // 버튼 텍스트 배열
     [SerializeField] private GameObject weaponListScreen;
+    [SerializeField] private Dagger dagger;
+    [SerializeField] private Ice ice;
+    [SerializeField] private Fire fire;
+    [SerializeField] private Thunder thunder;
+    [SerializeField] private Tree tree;
     private List<Sprite> weaponSprites; // weapon 폴더의 스프라이트들을 저장할 리스트
     private List<string> selectedWeaponNames; // 선택된 무기의 이름을 저장할 리스트
     private List<string> playerWeaponNames; // 플레이어가 가지고 있는 무기의 이름을 저장할 리스트
@@ -88,6 +93,22 @@ public class RandomWeapon : MonoBehaviour
     public void OnWeaponButtonClicked(int index){
         string selectedWeaponName = selectedWeaponNames[index];
         Debug.Log("Button " + index + " clicked. Selected weapon: " + selectedWeaponName);
+
+        switch(selectedWeaponName) {
+            case "ninja":
+            case "fire":
+            case "ice":
+            case "thunder":
+            case "tree":
+                if (BtnTexts[index].text == "Speed + 1") { 
+                    SetSpeedUP(selectedWeaponName);
+                } else if (BtnTexts[index].text == "Damage + 100") {
+                    SetDamageUp(selectedWeaponName);
+                }
+                break;
+            default:
+                break;
+        }
         
         levelUpPanel.SetActive(false); // 패널 비활성화
         weaponListScreen.SetActive(true);
@@ -134,6 +155,70 @@ public class RandomWeapon : MonoBehaviour
 
         if (monsterSpawner != null){
             monsterSpawner.RestartRoutine();
+        }
+    }
+
+    private void SetSpeedUP(string className) {
+        switch (className) {
+            case "ninja":
+                if (dagger != null) {
+                    dagger.UpgradeSpeed(1);
+                }
+                break;
+            case "ice":
+                if (ice != null) {
+                    ice.UpgradeSpeed(1);
+                }
+                break;
+            case "fire":
+                if (fire != null) {
+                    fire.UpgradeSpeed(1);
+                }
+                break;
+            case "thunder":
+                if (thunder != null) {
+                    thunder.UpgradeSpeed(1);
+                }
+                break;
+            case "tree":
+                if (tree != null) {
+                    tree.UpgradeSpeed(1);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void SetDamageUp(string className) {
+        switch (className) {
+            case "ninja":
+                if (dagger != null) {
+                    dagger.UpgradeDamage(100);
+                }
+                break;
+            case "ice":
+                if (ice != null) {
+                    ice.UpgradeDamage(100);
+                }
+                break;
+            case "fire":
+                if (fire != null) {
+                    fire.UpgradeDamage(100);
+                }
+                break;
+            case "thunder":
+                if (thunder != null) {
+                    thunder.UpgradeDamage(100);
+                }
+                break;
+            case "tree":
+                if (tree != null) {
+                    tree.UpgradeDamage(100);
+                }
+                break;
+            default: 
+                break;
         }
     }
 

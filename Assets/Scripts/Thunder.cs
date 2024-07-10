@@ -35,33 +35,38 @@ public class Thunder : MonoBehaviour
         return moveSpeed;
     }
 
-
-    public void UpgradeDamage(float newDamage) {
-        
-        if (damage >= 1000) {
-            Debug.Log("번개 속성 무기 데미지 최대치로 왔음");
-        } else {
-            damage += newDamage;
-            Debug.Log(damage);
-        }
-    }
-
-    public void DecreaseTime (float time) {
-
-        if (destroyTime == 1) {
-            Debug.Log("번개 속성 무기 시간 최대치로 왔음");
-        } else {
-             destroyTime -= time; 
-        Debug.Log(destroyTime);
-        }
-    }   
-
-    private Vector3 GetRandomPosition()
+    public void UpgradeDamage(float newDamage)
     {
-        float x = Random.Range(-1.17f, 3f);
-        float y = Random.Range(-2f, 4f);
-
-        return new Vector3(x, y, transform.position.z);
+        if (damage >= 800)
+        {
+            Debug.Log("번개 무기 데미지 최대치로 도달");
+        }
+        else
+        {
+            damage = Mathf.Min(damage + newDamage, 800);
+            Debug.Log("번개 무기 데미지 업그레이드! 현재 데미지: " + damage);
+        }
     }
+
+    public void UpgradeSpeed(float speedIncrement)
+    {
+        if (moveSpeed >= 10)
+        {
+            Debug.Log("번개 무기 스피드 최대치로 도달");
+        }
+        else
+        {
+            moveSpeed = Mathf.Min(moveSpeed + speedIncrement, 10);
+            Debug.Log("번개 무기 스피드 업그레이드! 현재 스피드: " + moveSpeed);
+        }
+    }
+
+    // private Vector3 GetRandomPosition()
+    // {
+    //     float x = Random.Range(-1.17f, 3f);
+    //     float y = Random.Range(-2f, 4f);
+
+    //     return new Vector3(x, y, transform.position.z);
+    // }
 
 }

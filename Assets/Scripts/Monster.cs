@@ -86,7 +86,6 @@ public class Monster : MonoBehaviour
             if (monsterHp <= 0) {
                 Destroy(gameObject);
                 ScoreManager.instance.IncreaseScore(100);
-                Debug.Log("Monster defeated");
             }
 
             Destroy(other.gameObject); // 무기는 무조건 사라짐

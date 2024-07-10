@@ -5,7 +5,7 @@ using UnityEngine;
 public class Fire : MonoBehaviour
 {
     [SerializeField] public float moveSpeed = 5f;
-    [SerializeField] public float damage = 300f;
+    [SerializeField] public float damage = 100f;
     [SerializeField] public float destroyTime = 1.0f;
     private Vector3 direction;
 
